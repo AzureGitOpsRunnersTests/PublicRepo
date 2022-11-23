@@ -1,0 +1,85 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote-back
+  namespace: public-repo
+  labels:
+    app: vote-back
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.init: regex:^3.10.*
+    fluxcd.io/tag.vote-frontd: semver:~3.1
+spec:
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: vote-back
+  template:
+    metadata:
+      labels:
+        app: vote-back
+    spec:
+      containers:
+      - name: vote-backd
+        image: azurek8ssamples.azurecr.io/marketplaceimages/azure-vote-back:1.0.1
+        ports:
+        - containerPort: 6379
+          name: vote-back
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote-front
+  namespace: public-repo
+  labels:
+    app: vote-front
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.init: regex:^3.10.*
+    fluxcd.io/tag.vote-backd: semver:~3.1
+spec:
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: vote-front
+  template:
+    metadata:
+      labels:
+        app: vote-front
+    spec:
+      containers:
+      - name: vote-front
+        image: azurek8ssamples.azurecr.io/marketplaceimages/azure-vote-front:1.0.2
+        ports:
+        - containerPort: 80
+          name: vote-front
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        env:
+        - name: REDIS
+          value: vote-back-redis
+        - name: TITLE
+          value: "Azure Vote App"
+        - name: VOTE1VALUE
+          value: Cats
+        - name: VOTE2VALUE
+          value: Dogs
