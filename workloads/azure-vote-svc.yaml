@@ -1,8 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: public-repo
-  name: vote-back
+  name: vote-back-public-repo
   labels:
     name: vote-back
 spec:
@@ -14,8 +13,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: public-repo
-  name: vote-front
+  name: vote-front-public-repo
   labels:
     name: vote-front
 spec:

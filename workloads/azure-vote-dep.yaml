@@ -76,7 +76,7 @@ spec:
             memory: 256Mi
         env:
         - name: REDIS
-          value: vote-back-redis
+          value: vote-back-public-repo
         - name: TITLE
           value: "Azure Vote App"
         - name: VOTE1VALUE
