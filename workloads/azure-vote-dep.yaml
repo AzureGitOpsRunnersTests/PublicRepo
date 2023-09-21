@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: vote-backd
-        image: azurek8ssamples.azurecr.io/marketplaceimages/azure-vote-back:1.0.1
+        image: azurek8ssamples.azurecr.io/marketplaceimages/azure-vote-back:latest
         ports:
         - containerPort: 6379
           name: vote-back
@@ -63,7 +63,7 @@ spec:
     spec:
       containers:
       - name: vote-front
-        image: azurek8ssamples.azurecr.io/marketplaceimages/azure-vote-front:1.0.2
+        image: azurek8ssamples.azurecr.io/marketplaceimages/azure-vote-front:latest
         ports:
         - containerPort: 80
           name: vote-front
